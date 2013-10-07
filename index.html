@@ -44,7 +44,7 @@
     for (var j = 0; j < 19; j++) {
       html += '<input type="checkbox" ';
 
-      if ((G[i] & (1 << (19 - j))) != 0) {
+      if ((G[i] & (1 << (19 - (j + 1)))) != 0) {
         html += 'checked '
       }
 
