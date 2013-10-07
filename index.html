@@ -33,6 +33,8 @@
   var grid = document.getElementById('grid');
   var pixels = document.getElementsByName('pixel');
 
+  var mouseDown = false;
+
   var G = [16, 16, 231184, 18577, 18578, 249748, 280600, 280596, 247570];
   var html = '';
 
@@ -46,13 +48,21 @@
         html += 'checked '
       }
 
-      html += 'name="pixel">';
+      html += 'name="pixel" onmouseover="checkBox(this)">';
     }
 
     html += '</p>';
   }
 
   grid.innerHTML = html;
+
+  document.onmousedown = function () {
+    mouseDown = true;
+  };
+
+  document.onmouseup = function () {
+    mouseDown = false;
+  };
 
   slider.onchange = function () {
     quality.innerHTML = slider.value;
@@ -79,6 +89,12 @@
       pixels[i].checked = false;
     }
   };
+
+  function checkBox(p) {
+    if (mouseDown) {
+      p.checked = !p.checked;
+    }
+  }
 
   </script>
   <script src="app.js"></script>
