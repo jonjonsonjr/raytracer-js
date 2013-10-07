@@ -14,7 +14,7 @@ for (var y = 0; y < 512; y++) {
   for (var x = 0; x < 512; x++) {
     var p = V(13, 13, 13);
 
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 64; i++) {
       var t = add(scale(scale(a, rand() - .5), 99), scale(scale(b, rand() - .5), 99));
 
       var q = sample(
@@ -22,7 +22,7 @@ for (var y = 0; y < 512; y++) {
         norm(add(scale(t, -1.0),scale(add(add(scale(a, rand() + x),scale(b, rand() + y)), c), 16)))
       );
 
-      p = add(scale(q, 28), p);
+      p = add(scale(q, 3.5), p);
     }
 
     data[0] = p.x;
@@ -40,7 +40,7 @@ function sample(o, d) {
   var n = s.n;
   var m = s.m;
 
-  if (m === 0) {
+  if (m == 0) {
     return scale(V(.7, .6, 1), pow(1 - d.z, 4));
   }
 
@@ -56,10 +56,10 @@ function sample(o, d) {
 
   var p = pow(dot(l, r) * ((b > 0) ? 1 : 0), 99);
 
-  if (m % 2 == 1) {
+  if ((m & 1) != 0) {
     h = scale(h, .2);
 
-    if ((ceil(h.x) + ceil(h.y)) % 2 == 1) {
+    if ((ceil(h.x) + ceil(h.y)) & 1 != 0) {
       return scale(V(3, 1, 1), b * .2 + .1);
     } else {
       return scale(V(3, 3, 3), b * .2 + .1);
