@@ -13,7 +13,26 @@
   <div class="main">
     <a href="https://github.com/jonjonsonjr/raytracer-js"><h1>raytracer-js</h1></a>
     <p>Your browser (probably) hasn't crashed, but you may have to wait a few minutes for this to finish.</p>
+    <div>
+      <p>Quality: <span id="quality">16</span></p>
+      <input type="range" id="slider" min="1" max="64" value="16">
+    </div>
+    <p><button id="draw">Draw!</button></p>
     <canvas id="canvas" width="512" height="512"></canvas>
   </div>
+  <script>
+  var slider = document.getElementById('slider');
+  var quality = document.getElementById('quality');
+  var draw = document.getElementById('draw');
+
+  slider.onchange = function () {
+    quality.innerHTML = slider.value;
+  };
+
+  draw.onclick = function () {
+    draw(slider.value);
+  };
+
+  </script>
   <script src="app.js"></script>
 </body>
