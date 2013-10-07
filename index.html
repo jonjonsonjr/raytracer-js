@@ -7,30 +7,77 @@
     left: 50%;
     margin-left: -256px;
   }
+
+  .grid {
+    margin-bottom: -15px;
+  }
   </style>
 </head>
 <body>
   <div class="main">
     <a href="https://github.com/jonjonsonjr/raytracer-js"><h1>raytracer-js</h1></a>
-    <p>Your browser (probably) hasn't crashed, but you may have to wait a few minutes for this to finish.</p>
     <div>
       <p>Quality: <span id="quality">16</span></p>
       <input type="range" id="slider" min="1" max="64" value="16">
+      <div id="grid">
+      </div>
     </div>
-    <p><button id="draw">Draw!</button></p>
+    <p><button id="draw">Draw!</button> <button id="clear">Clear</button></p>
     <canvas id="canvas" width="512" height="512"></canvas>
   </div>
   <script>
   var slider = document.getElementById('slider');
   var quality = document.getElementById('quality');
   var draw = document.getElementById('draw');
+  var clear = document.getElementById('clear');
+  var grid = document.getElementById('grid');
+  var pixels = document.getElementsByName('pixel');
+
+  var G = [16, 16, 231184, 18577, 18578, 249748, 280600, 280596, 247570];
+  var html = '';
+
+  for (var i = 0; i < 9; i++) {
+    html += '<p class="grid">';
+
+    for (var j = 0; j < 19; j++) {
+      html += '<input type="checkbox" ';
+
+      if ((G[i] & (1 << (19 - j))) != 0) {
+        html += 'checked '
+      }
+
+      html += 'name="pixel">';
+    }
+
+    html += '</p>';
+  }
+
+  grid.innerHTML = html;
 
   slider.onchange = function () {
     quality.innerHTML = slider.value;
   };
 
   draw.onclick = function () {
-    draw(slider.value);
+    var G = [];
+
+    for (var i = 0; i < 9; i++) {
+      var row = '';
+
+      for (var j = 0; j < 19; j++) {
+        row += pixels[i * 19 + j].checked ? '1' : '0';
+      }
+
+      G.push(parseInt(row, 2));
+    }
+
+    draw(slider.value, G);
+  };
+
+  clear.onclick = function () {
+    for (var i = 0; i < pixels.length; i++) {
+      pixels[i].checked = false;
+    }
   };
 
   </script>

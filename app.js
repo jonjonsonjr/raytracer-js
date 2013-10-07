@@ -9,9 +9,10 @@ var a = scale(norm(cross(V(0, 0, 1), g)), .002);
 var b = scale(norm(cross(g, a)), .002);
 var c = add(scale(add(a, b), -256), g);
 
-var G = [247570, 280596, 280600, 249748, 18578, 18577, 231184, 16, 16];
+var G = [16, 16, 231184, 18577, 18578, 249748, 280600, 280596, 247570];
 
-function draw(q) {
+function draw(q, g) {
+  G = g ? g : G;
   setTimeout(function() { drawRow(0, q); }, 0);
 }
 
@@ -91,9 +92,9 @@ function trace(o, d) {
   }
 
   for (var k = 18; k >= 0; k--) {
-    for (var j = 8; j >= 0; j--) {
+    for (var j = 0; j < 9; j++) {
       if ((G[j] & 1 << k) != 0) {
-        var vp = add(o, V(-k, 0, -j - 4));
+        var vp = add(o, V(-k, 0, j - 12));
         var b = dot(vp, d);
         var c = dot(vp, vp) - 1;
         var q = b * b - c;
