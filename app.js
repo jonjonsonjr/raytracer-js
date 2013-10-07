@@ -21,7 +21,7 @@ for (var y = 0; y < 512; y++) {
   for (var x = 0; x < 512; x++) {
     var p = V(13, 13, 13);
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 8; i++) {
       var t = add(scale(scale(a, rand() - .5), 99), scale(scale(b, rand() - .5), 99));
 
       var q = sample(
@@ -29,7 +29,7 @@ for (var y = 0; y < 512; y++) {
         norm(add(scale(t, -1.0),scale(add(add(scale(a, rand() + x),scale(b, rand() + y)), c), 16)))
       );
 
-      p = add(scale(q, 70), p);
+      p = add(scale(q, 28), p);
     }
 
     data[0] = p.x;
@@ -99,7 +99,7 @@ function trace(o, d) {
         if (q > 0) {
           var s = -b - sqrt(q);
 
-          if (s < 1 && s > .01) {
+          if (s < t && s > .01) {
             t = s;
             n = norm(add(vp, scale(d, t)));
             m = 2;
@@ -155,26 +155,3 @@ function pow(b, e) {
 function ceil(n) {
   return Math.ceil(n);
 }
-
-// var nugget = {
-//   x: Math.floor(Math.random() * maxWidth),
-//   y: Math.floor(Math.random() * maxHeight),
-//   width: width,
-//   height: height,
-//   color: 'yellow',
-//   clear: function () {
-//     context.clearRect(this.x * this.width, this.y * this.height, this.width, this.height);
-//   },
-//   draw: function () {
-//     context.beginPath();
-//     context.rect(this.x * this.width, this.y * this.height, this.width, this.height);
-//     context.fillStyle = this.color;
-//     context.fill();
-//   },
-//   move: function () {
-//     this.clear();
-//     this.x = Math.floor(Math.random() * maxWidth);
-//     this.y = Math.floor(Math.random() * maxHeight);
-//     this.draw();
-//   }
-// };
