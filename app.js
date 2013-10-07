@@ -1,38 +1,41 @@
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var id = context.createImageData(1, 1);
-var data = id.data;
-
 var G = [247570, 280596, 280600, 249748, 18578, 18577, 231184, 16, 16];
-var g = norm(V(-6, -16, 0));
 
-var a = scale(norm(cross(V(0, 0, 1), g)), .002);
-var b = scale(norm(cross(g, a)), .002);
-var c = add(scale(add(a, b), -256), g);
+window.onload = function (e) {
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var id = context.createImageData(1, 1);
+  var data = id.data;
+  
+  var g = norm(V(-6, -16, 0));
 
-for (var y = 0; y < 512; y++) {
-  for (var x = 0; x < 512; x++) {
-    var p = V(13, 13, 13);
+  var a = scale(norm(cross(V(0, 0, 1), g)), .002);
+  var b = scale(norm(cross(g, a)), .002);
+  var c = add(scale(add(a, b), -256), g);
 
-    for (var i = 0; i < 64; i++) {
-      var t = add(scale(scale(a, rand() - .5), 99), scale(scale(b, rand() - .5), 99));
+  for (var y = 0; y < 512; y++) {
+    for (var x = 0; x < 512; x++) {
+      var p = V(13, 13, 13);
 
-      var q = sample(
-        add(V(17, 16, 8), t),
-        norm(add(scale(t, -1.0),scale(add(add(scale(a, rand() + x),scale(b, rand() + y)), c), 16)))
-      );
+      for (var i = 0; i < 64; i++) {
+        var t = add(scale(scale(a, rand() - .5), 99), scale(scale(b, rand() - .5), 99));
 
-      p = add(scale(q, 3.5), p);
+        var q = sample(
+          add(V(17, 16, 8), t),
+          norm(add(scale(t, -1.0),scale(add(add(scale(a, rand() + x),scale(b, rand() + y)), c), 16)))
+        );
+
+        p = add(scale(q, 3.5), p);
+      }
+
+      data[0] = p.x;
+      data[1] = p.y;
+      data[2] = p.z;
+      data[3] = 255;
+
+      context.putImageData(id, 511 - x, 511 - y);
     }
-
-    data[0] = p.x;
-    data[1] = p.y;
-    data[2] = p.z;
-    data[3] = 255;
-
-    context.putImageData(id, 511 - x, 511 - y);
   }
-}
+};
 
 function sample(o, d) {
   var s = trace(o, d);
