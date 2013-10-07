@@ -1,12 +1,5 @@
-var url = 'http://jonjonsonjr.github.io/vimpossible';
-var highScoreSpan = document.getElementById('highScore');
-var scoreSpan = document.getElementById('score');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-var height = 20;
-var width = 10;
-
-//var pixels = [];
 var id = context.createImageData(1, 1);
 var data = id.data;
 
